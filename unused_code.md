@@ -38,7 +38,7 @@ Luckily nobody knows that I've removed more then I added :smiley:
 
 
 * *no hard feelings if "your code" is removed*
-* more maintanence afford
+* more maintenance afford
 * re-using code is unlikely
 * have to understand unused code
 
@@ -155,6 +155,8 @@ you can whitelist routes / action that should be ignored
 
 Nice to find *unused routes* and find *code smells* in your controllers.
 
+^ Was surprised how many unused actions / routes we had
+
 ---
 
 ![](https://spectator.imgix.net/content/uploads/2018/01/iStock-637947976.jpg?auto=compress,enhance,format&crop=faces,entropy,edges&fit=crop&w=820&h=550)
@@ -167,7 +169,7 @@ Nice to find *unused routes* and find *code smells* in your controllers.
 
 ## debride
 
-Static analysis of code for potentially uncalled / dead methods
+"Static analysis of code for potentially uncalled / dead methods"
 
 [github.com/seattlerb/debride](https://github.com/seattlerb/debride)
 
@@ -219,7 +221,6 @@ exclude migration methods (`up`, `down`)
 
 ```ruby
 prepend_before_action :my_function
-rescue_from NotFound, with: :not_found
 ```
 
 ```ruby
@@ -231,6 +232,13 @@ alias add add_with_patch
 attr_accessor :my_property # model
 form.radio_button :my_property # view
 ```
+
+```ruby
+user&.within_group?(group)
+
+```
+
+^ &. = Safe navigation operator 
 
 ---
 
@@ -253,6 +261,8 @@ end
 ```
 
 Use `git grep` and also check the git history
+
+^ not only for decried
 
 ---
 
@@ -303,72 +313,6 @@ Also found code that was there only for testing - *bad practice*.
 
 ---
 
-## rails best practices
-
-![](https://1452858779.rsc.cdn77.org/photo/20160424/fd0deffd-54b9-4415-92a8-4fb06c267f38.jpg)
-
----
-
-## rails best practices
-
-"a code metric tool to check the quality of Rails code"
-
-[https://github.com/flyerhzm/rails_ best _practices](https://github.com/flyerhzm/rails_best_practices)
-
----
-
-## rails best practices
-
-Provide hints to
-
-* Move code from Controller to Model
-* RESTful Conventions
-* Remove empty helpers
-* ...
-* Find unused code
-
----
-
-## rails best practice - Output
-
-```bash
-/app/controllers/application_controller.rb:92 - remove unused methods (ApplicationController#handle_unverified_request)
-/app/controllers/application_controller.rb:109 - remove unused methods (ApplicationController#process_action)
-/app/controllers/application_controller.rb:183 - remove unused methods (ApplicationController#module_name)
-/app/controllers/application_controller.rb:198 - remove unused methods (ApplicationController#abort)
-/app/controllers/backend_controller.rb:52 - remove unused methods (BackendController#check_admin_subdomain)
-/app/controllers/backend_controller.rb:68 - remove unused methods (BackendController#load_user_from_session)
-/app/controllers/events_controller.rb:273 - remove unused methods (EventsController#dismiss_for_event)
-/app/controllers/events_controller.rb:279 - remove unused methods (EventsController#dismiss_for_all)
-/app/controllers/admin/advertisements_controller.rb:89 - remove unused methods (Admin::AdvertisementsController#set_advertisement)
-/app/controllers/people_to_meet_controller.rb:60 - remove unused methods (PeopleToMeetController#dismiss_user)
-/app/controllers/frontend_controller.rb:116 - remove unused methods (FrontendController#handle_reklame)
-```
-
----
-
-## rails best practice - Mistakes
-
-```
-get :activate, action: :activatable_check, as: :try_to_activate 
-```
-
-```
-prepend_before_action :configure_receiver, only: %i[new create]
-def configure_receiver 
-  @image_type = params[:image_type].to_s
-end 
-```
-
----
-
-## rails best practice
-
-* No configuration needed
-* Good results
-* Also a lot of "noise"
-
----
 
 # unused
 
@@ -422,6 +366,62 @@ overwittting method
 * No configuration needed
 * Nice output
 * Results are more or less like in the other tools
+
+---
+
+## rails best practices
+
+![](https://1452858779.rsc.cdn77.org/photo/20160424/fd0deffd-54b9-4415-92a8-4fb06c267f38.jpg)
+
+---
+
+## rails best practices
+
+"a code metric tool to check the quality of Rails code"
+
+[https://github.com/flyerhzm/rails_ best _practices](https://github.com/flyerhzm/rails_best_practices)
+
+---
+
+## rails best practices
+
+Provide hints to
+
+* Move code from Controller to Model
+* RESTful Conventions
+* Remove empty helpers
+* ...
+* Find unused code
+
+---
+
+## rails best practice - Output
+
+```bash
+/app/controllers/application_controller.rb:92 - remove unused methods (ApplicationController#handle_unverified_request)
+/app/controllers/application_controller.rb:109 - remove unused methods (ApplicationController#process_action)
+/app/controllers/application_controller.rb:183 - remove unused methods (ApplicationController#module_name)
+/app/controllers/application_controller.rb:198 - remove unused methods (ApplicationController#abort)
+/app/controllers/backend_controller.rb:52 - remove unused methods (BackendController#check_admin_subdomain)
+/app/controllers/backend_controller.rb:68 - remove unused methods (BackendController#load_user_from_session)
+/app/controllers/events_controller.rb:273 - remove unused methods (EventsController#dismiss_for_event)
+/app/controllers/events_controller.rb:279 - remove unused methods (EventsController#dismiss_for_all)
+/app/controllers/admin/advertisements_controller.rb:89 - remove unused methods (Admin::AdvertisementsController#set_advertisement)
+/app/controllers/people_to_meet_controller.rb:60 - remove unused methods (PeopleToMeetController#dismiss_user)
+/app/controllers/frontend_controller.rb:116 - remove unused methods (FrontendController#handle_reklame)
+```
+
+---
+
+## rails best practice
+
+* No configuration needed
+* Good results
+* Also a lot of "noise"
+* Same problems like the other tools
+
+^ not only doing unused methods
+
 
 ---
 
@@ -548,6 +548,7 @@ browse your app: list of (un)used views
 
 ## Summary
 
+* many tools out there
 * no easy way - wroth the effort
 * good chance to learn your code
 * domino effect: e.g. unused action → view → method
