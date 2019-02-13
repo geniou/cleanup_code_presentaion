@@ -418,7 +418,7 @@ Provide hints to
 * No configuration needed
 * Good results
 * Also a lot of "noise"
-* Same problems like the other tools
+* Same problems as for unused
 
 ^ not only doing unused methods
 
